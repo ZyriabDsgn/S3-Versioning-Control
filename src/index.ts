@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-import-module-exports */
-import fetch from 'cross-fetch'
+import fetch from 'cross-fetch';
 import query from './utils/helpers/controlVersionsQuery.helper';
 import getAccessToken from './utils/auth-caching/getAccessToken';
 import getBucketInfo from './utils/getBucketInfo.utils';
@@ -8,13 +8,27 @@ import 'dotenv/config';
 
 exports.handler = async (event: any) => {
   try {
-    const controlApiUrl = process.env.CONTROL_API_URL!;
-   
+    let controlApiUrl: string;
+
+    switch (process.env.NODE_ENV) {
+      case 'development':
+        controlApiUrl = process.env.DEV_CONTROL_API_URL!;
+        break;
+      case 'staging':
+        controlApiUrl = process.env.STAGING_CONTROL_API_URL!;
+        break;
+      case 'production':
+        controlApiUrl = process.env.PRODUCTION_CONTROL_API_URL!;
+        break;
+      default:
+        controlApiUrl = 'http://localhost:8000';
+    }
+
     const [bucketName, fileName, maxVersionsNumber] = getBucketInfo(event);
 
     const [error, token] = await getAccessToken();
 
-    if(error) throw error;
+    if (error) throw error;
 
     query.variables.bucketName = bucketName;
     query.variables.fileName = fileName;
