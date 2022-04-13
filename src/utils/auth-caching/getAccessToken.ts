@@ -4,16 +4,20 @@ import getExistingToken from './getExistingToken';
 import hasTokenExpired from './hasTokenExpired';
 import deletePreviousTokens from './deletePreviousTokens';
 
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 export default async function getAuthToken(): Promise<
   [undefined, string] | [Error]
 > {
   try {
-    const [error, token] = await getExistingToken();
+    if (!IS_DEV) {
+      const [error, token] = await getExistingToken();
 
-    if (error) throw error;
+      if (error) throw error;
 
-    if (token && !hasTokenExpired(token)) {
-      return [undefined, token];
+      if (token && !hasTokenExpired(token)) {
+        return [undefined, token];
+      }
     }
 
     const reqBody = {
@@ -33,13 +37,15 @@ export default async function getAuthToken(): Promise<
     );
 
     const resData = await result.json();
-    
+
     if (!resData.access_token) {
       throw new Error('No Access Token returned');
     }
 
-    await deletePreviousTokens();
-    await storeAuthToken(resData.access_token);
+    if (!IS_DEV) {
+      await deletePreviousTokens();
+      await storeAuthToken(resData.access_token);
+    }
 
     return [undefined, resData.access_token];
   } catch (err) {
