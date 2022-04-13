@@ -6,7 +6,8 @@
   "author": "Arthur Wallendorff - Metaoist Dsgn",
   "license": "All rights reserved",
   "scripts": {
-    "dev": "sam local start-api",
+    "dev": "rm -f test-data/log.txt && sam local invoke -e test-data/event.json -n test-data/env-var.json -l test-data/log.txt --region eu-central-1 --shutdown",
+    "invoke": "npm run build && mv dist/index.js . && rm -f test-data/log.txt && sam local invoke -e test-data/event.json -n test-data/env-var.json -l test-data/log.txt --region eu-central-1 --shutdown && rm index.js && rmdir dist",
     "build": "ncc build src/index.ts",
     "check": "tsc --noEmit",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
