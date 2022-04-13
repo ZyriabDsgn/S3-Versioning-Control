@@ -8,22 +8,8 @@ import 'dotenv/config';
 
 exports.handler = async (event: any) => {
   try {
-    let controlApiUrl: string;
-
-    switch (process.env.NODE_ENV) {
-      case 'development':
-        controlApiUrl = process.env.DEV_CONTROL_API_URL!;
-        break;
-      case 'staging':
-        controlApiUrl = process.env.STAGING_CONTROL_API_URL!;
-        break;
-      case 'production':
-        controlApiUrl = process.env.PRODUCTION_CONTROL_API_URL!;
-        break;
-      default:
-        controlApiUrl = 'http://localhost:8000';
-    }
-
+    const controlApiUrl = process.env.CONTROL_API_URL!;
+    
     const [bucketName, fileName, maxVersionsNumber] = getBucketInfo(event);
 
     const [error, token] = await getAccessToken();
