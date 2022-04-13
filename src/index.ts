@@ -6,10 +6,12 @@ import getAccessToken from './utils/auth-caching/getAccessToken';
 import getBucketInfo from './utils/getBucketInfo.utils';
 import 'dotenv/config';
 
+require('source-map-support').install();
+
 exports.handler = async (event: any) => {
   try {
     const controlApiUrl = process.env.CONTROL_API_URL!;
-    
+
     const [bucketName, fileName, maxVersionsNumber] = getBucketInfo(event);
 
     const [error, token] = await getAccessToken();
