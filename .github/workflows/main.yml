@@ -3,10 +3,7 @@ name: 'Deploy production'
 on:
   push:
     branches:
-      - staging
-  pull_request:
-    branches:
-      - staging
+      - main
 
 jobs:
   deploy_lambda:
