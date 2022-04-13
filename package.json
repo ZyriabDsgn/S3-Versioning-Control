@@ -1,0 +1,31 @@
+{
+  "name": "s3-versioning-control",
+  "version": "1.0.0",
+  "description": "Webhook to be triggered over a POST on a linked S3. Contacts the Buckaroo miniservice to make sure the last version is being deleted (if more than N versions already on the bucket)",
+  "main": "index.js",
+  "author": "Arthur Wallendorff - Metaoist Dsgn",
+  "license": "All rights reserved",
+  "scripts": {
+    "dev": "sam local start-api",
+    "build": "ncc build src/index.ts",
+    "check": "tsc --noEmit",
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "@vercel/ncc": "^0.33.4",
+    "cross-fetch": "^3.1.5",
+    "dotenv": "^16.0.0",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.23"
+  }
+}
