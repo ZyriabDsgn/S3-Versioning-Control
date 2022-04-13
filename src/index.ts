@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-import-module-exports */
 import fetch from 'cross-fetch'
-import query from './utils/controlVersionsQuery';
-import getAccessToken from './utils/getAccessToken';
-import getBucketInfo from './utils/getBucketInfo';
+import query from './utils/helpers/controlVersionsQuery.helper';
+import getAccessToken from './utils/auth-caching/getAccessToken';
+import getBucketInfo from './utils/getBucketInfo.utils';
 import 'dotenv/config';
 
 exports.handler = async (event: any) => {
