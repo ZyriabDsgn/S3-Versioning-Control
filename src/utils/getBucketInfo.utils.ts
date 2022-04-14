@@ -7,7 +7,7 @@ export default function getBucketInfo(event: any) {
   );
 
   switch (bucketName) {
-    case 'metaoist-test-bucket-app':
+    case 'metaoist-shopicsv-app-staging' || 'metaoist-shopicsv-app-production':
       maxVersionsNumber = 3;
       break;
     default:
