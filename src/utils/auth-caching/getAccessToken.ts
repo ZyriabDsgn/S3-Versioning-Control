@@ -4,12 +4,13 @@ import getExistingToken from './getExistingToken';
 import hasTokenExpired from './hasTokenExpired';
 import deletePreviousTokens from './deletePreviousTokens';
 
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 export default async function getAuthToken(): Promise<
-  [undefined, string] | [Error]
+[undefined, string] | [Error]
 > {
   try {
+    const IS_DEV = process.env.NODE_ENV === 'development';
+    
     if (!IS_DEV) {
       const [error, token] = await getExistingToken();
 
