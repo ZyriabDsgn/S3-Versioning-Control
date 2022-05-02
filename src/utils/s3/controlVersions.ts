@@ -45,7 +45,7 @@ export default async function controlVersions(
         )
     );
 
-    return [filesToDelete.filter(([e]) => e !== undefined)[0][0], true];
+    return [filesToDelete.find(([e]) => e !== undefined)![0], true];
   } catch (err) {
     return [err as Error];
   }
