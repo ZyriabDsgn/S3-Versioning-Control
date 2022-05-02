@@ -9,7 +9,7 @@ interface InputArgs {
 
 export default async function controlVersions(
   args: InputArgs
-): Promise<[undefined, boolean] | [Error]> {
+): Promise<[undefined, boolean] | [Error, boolean] | [Error]> {
   try {
     const [error, files] = await listBucketContent({
       bucketName: args.bucketName,
@@ -45,7 +45,7 @@ export default async function controlVersions(
         )
     );
 
-    return [filesToDelete.filter(([e]) => e !== undefined)[0][0]!, true];
+    return [filesToDelete.filter(([e]) => e !== undefined)[0][0], true];
   } catch (err) {
     return [err as Error];
   }
