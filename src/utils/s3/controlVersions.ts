@@ -17,19 +17,17 @@ export default async function controlVersions(
 
     if (error) throw error as Error;
 
-    const fileToUpdate = (<any[]>files!).filter(
-      (f) => f.name === args.fileName
-    );
+    const fileToUpdate = (<any[]>files!).find((f) => f.name === args.fileName);
 
     if (
-      fileToUpdate.length === 0 ||
-      fileToUpdate[0].length < args.maxVersionsNumber
+      fileToUpdate === undefined ||
+      fileToUpdate.length < args.maxVersionsNumber
     ) {
       return [undefined, false];
     }
 
     const filesToDelete = await Promise.all(
-      fileToUpdate[0]
+      fileToUpdate
         .versions!.sort(
           (a: any, b: any) =>
             new Date(a.lastModified).getTime() -
