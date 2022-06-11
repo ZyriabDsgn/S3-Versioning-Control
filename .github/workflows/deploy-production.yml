@@ -3,10 +3,7 @@ name: 'Deploy production'
 on:
   push:
     branches:
-      - staging
-  pull_request:
-    branches:
-      - staging
+      - main
 
 jobs:
   deploy_lambda:
@@ -32,13 +29,9 @@ jobs:
         run: npm run check
       - name: 'Linting code'
         run: npm run lint
-      # - name: 'Running tests'
-        # uses: raulanatol/jest-coverage-comment-action@main
-        # with:
-          # github-token: ${{ secrets.GITHUB_TOKEN }}'
       - name: 'Bundling files'
         run: npx ncc build src/index.ts
       - name: 'Zipping bundled file'
         run: zip -j deploy.zip ./dist/*
       - name: 'Deploying to AWS Lambda'
-        run: aws lambda update-function-code --function-name=webhook-s3-versioning-control-staging --zip-file=fileb://deploy.zip
+        run: aws lambda update-function-code --function-name=webhook-s3-versioning-control-production --zip-file=fileb://deploy.zip
