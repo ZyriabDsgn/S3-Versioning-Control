@@ -11,6 +11,7 @@ export default async function controlVersions(
   args: InputArgs
 ): Promise<[undefined, boolean] | [Error, boolean] | [Error]> {
   try {
+    // TODO: perhaps replace by HEAD to reduce AWS cost
     const [error, files] = await listBucketContent({
       bucketName: args.bucketName,
     });
