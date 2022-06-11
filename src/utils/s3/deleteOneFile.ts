@@ -1,6 +1,5 @@
 import {
   DeleteObjectCommand,
-  DeleteObjectCommandOutput,
 } from '@aws-sdk/client-s3';
 import isBucketVersioned from './isBucketVersioned';
 import s3Client from './s3Client';
@@ -15,7 +14,6 @@ export default async function deleteOneFile(
   args: InputArgs
 ): Promise<[undefined, string] | [Error]> {
   try {
-    let res: DeleteObjectCommandOutput | undefined;
     const isVersioned = await isBucketVersioned(args.bucketName);
 
     const params: any = {
@@ -24,11 +22,7 @@ export default async function deleteOneFile(
       VersionId: isVersioned ? args.versionId : 'null',
     };
 
-    if (!isVersioned) {
-      res = await s3Client().send(new DeleteObjectCommand(params));
-    } else if (isVersioned && args.versionId) {
-      res = await s3Client().send(new DeleteObjectCommand(params));
-    }
+    const res = await s3Client().send(new DeleteObjectCommand(params));
 
     const status = res?.$metadata.httpStatusCode || 500;
 
