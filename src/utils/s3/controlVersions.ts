@@ -21,7 +21,7 @@ export default async function controlVersions(
     const fileToUpdate = (<any[]>files!).find((f) => f.name === args.fileName);
 
     if (
-      fileToUpdate === undefined ||
+      fileToUpdate == null ||
       fileToUpdate.length < args.maxVersionsNumber
     ) {
       return [undefined, false];
