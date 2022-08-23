@@ -1,2 +1,2 @@
 # S3-Versioning-Control
-Webhook-Lambda to control S3 objects' versions number with Buckaroo
+Webhook (AWS Lambda) controlling the number of same S3 objects (on versioned bucket) and deleting the oldest if there's too many.
