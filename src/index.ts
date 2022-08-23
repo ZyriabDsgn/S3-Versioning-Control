@@ -9,7 +9,7 @@ require('source-map-support').install();
 exports.handler = async (event: any) => {
   try {
     const [bucketName, fileName, maxVersionsNumber] = getBucketInfo(event);
-    const [error] = await controlVersions({
+    const [error, hasDeleted] = await controlVersions({
       bucketName,
       fileName,
       maxVersionsNumber,
@@ -17,7 +17,7 @@ exports.handler = async (event: any) => {
 
     if (error) throw error;
 
-    console.log(`File succesfully deleted`);
+    if (hasDeleted) console.log('File succesfully deleted');
   } catch (err) {
     console.error(err);
   }
