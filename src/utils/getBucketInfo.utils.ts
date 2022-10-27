@@ -1,18 +1,13 @@
-export default function getBucketInfo(event: any) {
-  let maxVersionsNumber;
+export default function getBucketInfo(event: any): [string, string, number] {
+  let maxVersionsNumber = 2;
 
-  const bucketName = event.Records[0].s3.bucket.name;
+  const bucketName: string = event.Records[0].s3.bucket.name;
   const fileName = decodeURIComponent(
     event.Records[0].s3.object.key.replace(/\+/g, ' ')
   );
 
-  switch (bucketName) {
-    case 'metaoist-shopicsv-app-staging' || 'metaoist-shopicsv-app-production':
-      maxVersionsNumber = 3;
-      break;
-    default:
-      maxVersionsNumber = 2;
-      break;
+  if (bucketName.includes('shopicsv')) {
+    maxVersionsNumber = 3;
   }
 
   return [bucketName, fileName, maxVersionsNumber];

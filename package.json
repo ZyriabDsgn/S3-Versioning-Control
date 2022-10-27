@@ -1,20 +1,19 @@
 {
   "name": "s3-versioning-control",
-  "version": "1.0.0",
-  "description": "Webhook to be triggered over a POST on a linked S3. Contacts the Buckaroo miniservice to make sure the last version is being deleted (if more than N versions already on the bucket)",
+  "version": "2.0.0",
+  "description": "Webhook to be triggered over a POST on a linked S3. Deletes older version of a newly uploaded file (if more than N versions already on the bucket)",
   "main": "index.js",
   "author": "Arthur Wallendorff - Metaoist Dsgn",
   "license": "All rights reserved",
   "scripts": {
     "dev": "rm -f test-data/log.txt && sam local invoke -e test-data/event.json -l test-data/log.txt --region eu-central-1 --shutdown",
     "invoke": "npm run build && mv dist/index.js . && rm -f test-data/log.txt && sam local invoke -e test-data/event.json -l test-data/log.txt --region eu-central-1 --shutdown && rm index.js && rmdir dist",
-    "build": "ncc build src/index.ts",
+    "build": "ncc --source-map build src/index.ts",
     "check": "tsc --noEmit",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.67.0",
-    "@aws-sdk/lib-dynamodb": "^3.67.0",
+    "@aws-sdk/client-s3": "^3.79.0",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "@vercel/ncc": "^0.33.4",
@@ -25,11 +24,12 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
-    "jwt-decode": "^3.1.2",
+    "normalize-path": "^3.0.0",
     "source-map-support": "^0.5.21",
     "typescript": "^4.6.3"
   },
   "devDependencies": {
-    "@types/node": "^17.0.23"
+    "@types/node": "^17.0.23",
+    "@types/normalize-path": "^3.0.0"
   }
 }
