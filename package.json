@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "rm -f test-data/log.txt && sam local invoke -e test-data/event.json -l test-data/log.txt --region eu-central-1 --shutdown",
     "invoke": "npm run build && mv dist/index.js . && rm -f test-data/log.txt && sam local invoke -e test-data/event.json -l test-data/log.txt --region eu-central-1 --shutdown && rm index.js && rmdir dist",
-    "build": "ncc build src/index.ts",
+    "build": "ncc --source-map build src/index.ts",
     "check": "tsc --noEmit",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
   },
